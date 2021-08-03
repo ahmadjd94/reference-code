@@ -1,0 +1,1 @@
+create table grades (id serial, grade int);

@@ -1,0 +1,16 @@
+<html>
+<head>
+	<title>edit student</title>
+</head>
+
+<body>
+	<form action="#" th:action="'/update-student/'+${student.id}" th:object="${student}" method="post">
+			<input type="text" th:field="*{name}"  th:placeholder="#{student.name}" />
+			<input type="text" th:field="*{major}" th:placeholder="#{student.major}" />			
+			<input type="text" th:field="*{level}" th:placeholder="#{student.level}"/>
+			
+			<input type="submit"/>
+	</form>
+
+</body>
+</html>

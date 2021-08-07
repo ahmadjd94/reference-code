@@ -2,20 +2,24 @@ package com.htu.college.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.htu.college.dtos.StudentServerDTO;
 import com.htu.college.models.Student;
 import com.htu.college.repositories.StudentRepo;
 import com.htu.college.services.StudentService;
@@ -32,8 +36,20 @@ public class StudentController {
 	
 
 	@GetMapping(value="/students")
-	public @ResponseBody List<Student> getStudents() {
-		return studentService.getAllStudnets();
+	public ResponseEntity<?> getStudents(@RequestHeader("x-client-type") Optional<String> clientType) {
+		System.out.println(clientType);
+		List<Student> studentList = studentService.getAllStudnets();
+		
+		if (clientType.isPresent()) {
+			if (clientType.get().equals("SERVER")){
+				return  ResponseEntity.accepted().body( studentList
+					.stream()
+					.map(s -> StudentServerDTO.dTOFromStudent(s))
+					.collect(Collectors.toList()));
+			}
+		}
+		return ResponseEntity.badRequest().build();
+		
 	}
 	
 	@PostMapping(value="/students")

@@ -1,0 +1,20 @@
+<html>
+	<head>
+	<link th:href="@{/css/styles.css}" rel="stylesheet">
+	</head>
+	<body>
+		<h1>Welcome to our project </h1>
+		<div th:each="student: ${students}">
+			<h2 th:text="${student.id}"> </h2>
+			<h2 th:text="${student.name}"> </h2>
+			<h2 th:text="${student.major}"> </h2>
+			<h2 th:text="${student.level}"> </h2>
+			<form th:action="'/delete-student/'+${student.id}" method="delete">
+						<input type="submit" value="delete"/>
+			
+			</form>
+			<hr>
+		</div>
+		
+	</body>
+</html>

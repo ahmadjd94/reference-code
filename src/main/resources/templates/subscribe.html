@@ -1,0 +1,24 @@
+<html>
+<head>
+	<title>edit student</title>
+</head>
+
+<body>
+	<form id ="lectureform" action="#" th:action="'/subscribe-resp/'+${studentId}" th:object="${lecture}" method="post">
+		 <label for="cars">Choose a lecture:</label>
+		 <select  th:field=lecture name="cars" id="cars"  form="lectureform">
+	 		<div th:each="lecture: ${lectures}">
+			<option th:value=${lecture.id} th:text=${lecture.name}></option>
+		</select>
+		
+
+				</div>
+				
+				
+  						
+				
+		<input type="submit"/>
+	</form>
+
+</body>
+</html>

@@ -48,7 +48,7 @@ public class StudentController {
 					.collect(Collectors.toList()));
 			}
 		}
-		return ResponseEntity.badRequest().build();
+		return ResponseEntity.accepted().body(studentList);
 		
 	}
 	

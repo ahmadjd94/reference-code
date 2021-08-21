@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.htu.college.models.Lecture;
 import com.htu.college.models.Student;
+import com.htu.college.services.LectureService;
 import com.htu.college.services.StudentService;
 
 @Controller
 public class HomeController {
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	LectureService lectureService;
 	
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -32,6 +37,15 @@ public class HomeController {
 		model.addAttribute("student", s);
 			return "studentSignup";
 	}
+	
+	@GetMapping("/student-with-details/{studentId}")
+	public String getStudentWithDetails(@PathVariable Integer studentId,Model model) {
+		Student s = studentService.getStudentById(studentId);
+		model.addAttribute("student", s);
+			return "studentWithDetails";
+	}
+	
+	
 	
 	@PostMapping("/create-student")
 	public String createStudentResponse(Student student) {
@@ -60,5 +74,29 @@ public class HomeController {
 		return "studentUpdateSuccessful";
 	}
 	
+	
+	@GetMapping("delete-student-from-lecture/{studentId}/lecture/{lectureId}")
+	public String deleteStudent(@PathVariable Integer studentId,@PathVariable Integer lectureId) {
+		lectureService.deleteStudentfromLecture(studentId,lectureId);
+		return "deletedStudentfromLecture";
+	}
+	
+	
+
+	@GetMapping("subscribe/{studentId}")
+	public String subscribeStudent(Model model,@PathVariable Integer studentId) {
+		List<Lecture> lectures = lectureService.getAllLectures();
+		model.addAttribute("studentId",studentId);
+		model.addAttribute("lectures",lectures);
+		return "subscribe";
+	}
+	
+	
+	@PostMapping("subscribe-resp/{studentId}")
+	public String subscribeStudent(Lecture lecture) {
+
+		System.out.print(lecture);
+		return "subscribe";
+	}
 	
 }

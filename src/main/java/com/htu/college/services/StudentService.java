@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.htu.college.models.Chair;
 import com.htu.college.models.Student;
 import com.htu.college.repositories.StudentRepo;
 
@@ -15,6 +16,9 @@ import com.htu.college.repositories.StudentRepo;
 public class StudentService {
 	@Autowired
 	private StudentRepo studentRepo;
+	
+	@Autowired 
+	private ChairService chairService;
 	
 	
 	public Student getStudentById(Integer id) {
@@ -30,6 +34,8 @@ public class StudentService {
 		return studentRepo.findAll();
 	}
 	public Student create(Student student) {
+		Chair createdChair = chairService.createChair(student.getChair());
+		student.setChair(createdChair);
 		return studentRepo.save(student);
 	}
 	

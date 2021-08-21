@@ -1,0 +1,27 @@
+<html>
+	<head>
+	<link th:href="@{/css/styles.css}" rel="stylesheet">
+	</head>
+	<body>
+		<h1>Welcome to profile</h1>
+		
+		<h2 th:text="${student.id}"> </h2>
+		<h2 th:text="${student.name}"> </h2>
+		<h2 th:text="${student.major}"> </h2>
+		<h2 th:text="${student.level}"> </h2>
+			<hr>
+		<div th:each="lecture: ${student.lectures}">
+			<h2 th:text="${lecture.id}"> </h2>
+			<h2 th:text="${lecture.name}"> </h2>
+			<h2 th:text="${lecture.time}"> </h2>
+			<h2 th:text="${lecture.location}"> </h2>
+			<form th:action="'/delete-student-from-lecture/'+${student.id}+'/lecture/'+${lecture.id}" method="delete">
+						<input type="submit" value="delete"/>
+						
+			</form>
+			
+			<hr>
+		</div>
+		
+	</body>
+</html>

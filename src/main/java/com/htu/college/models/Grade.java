@@ -1,3 +1,5 @@
+package com.htu.college.models;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
